@@ -1,16 +1,34 @@
 import React, { Component } from 'react';
 import Entry from './entry';
+import { Grid, Row, Col, Panel, ListGroup, ListGroupItem, ButtonToolbar, Button, Table, Well } from 'react-bootstrap/lib';
 
 const ItemsList = props => {
   const messages = props.messages.map((message, index) =>
-    <Entry
-      key={index}
-      handleDelClick={props.handleDelClick}
-      message={message}
-    />
+    <tr key={index}>
+      <td>
+        <Button bsStyle="danger" bsSize="xsmall" onClick={() => props.handleDelClick(message.id)} type="button">X</Button>
+      </td>
+      <td>
+        <Entry
+          handleDelClick={props.handleDelClick}
+          message={message}
+        />
+      </td>
+    </tr>
   );
   return (
-    <div>{messages}</div>
+    <Panel collapsible defaultExpanded header="Some Items">
+      <Well bsSize="small">
+        <ButtonToolbar>
+          <Button bsSize="xsmall" bsStyle="primary" onClick={props.handleAdd}>Add</Button>
+        </ButtonToolbar>
+      </Well>
+      <Table hover striped bordered>
+        <tbody>
+          {messages}
+        </tbody>
+      </Table>
+    </Panel>
   );
 }
 
@@ -26,17 +44,20 @@ export default class App extends Component {
     this.messages.remove(id);
   }
 
-  handleClick = (ev) => {
+  handleAdd = (ev) => {
     ev.preventDefault();
     this.messages.store({ time: new Date(), copy: 'n/a' });
   }
 
   render() {
     return (
-      <div>
-        <button onClick={this.handleClick}>Add</button>
-        <ItemsList handleDelClick={this.handleDelClick} messages={this.state.messages} />
-      </div>
+      <Grid>
+        <Row className="show-grid">
+          <Col xs={12} md={12}>
+            <ItemsList handleAdd={this.handleAdd} handleDelClick={this.handleDelClick} messages={this.state.messages} />
+          </Col>
+        </Row>
+      </Grid>
     )
   }
 }

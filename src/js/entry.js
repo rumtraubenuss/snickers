@@ -1,8 +1,8 @@
 import React from 'react';
+import Button from 'react-bootstrap/lib/Button';
 
 export default props => (
-  <div>
-    <button onClick={() => props.handleDelClick(props.message.id)} type="button">X</button>
+  <span>
     {props.message.time.getTime()} - {props.message.id}
-  </div>
+  </span>
 )
