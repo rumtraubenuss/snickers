@@ -27,6 +27,7 @@ export default class App extends Component {
         <Row className="show-grid">
           <Col xs={12} md={12}>
             <PageHeader>Example page header <small>Subtext for header</small></PageHeader>
+            <h2>Foo bar</h2>
             <ItemList
               handleAdd={this.handleAdd}
               handleDelClick={this.handleDelClick}
