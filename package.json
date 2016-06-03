@@ -4,7 +4,10 @@
   "description": "snickers",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "concurrently --kill-others \"npm run horizon:dev\" \"npm run webpack:dev\"",
+    "horizon:dev": "hz serve --dev",
+    "webpack:dev": "webpack --watch"
   },
   "repository": {
     "type": "git",
@@ -35,5 +38,8 @@
       "es2015",
       "stage-0"
     ]
+  },
+  "devDependencies": {
+    "concurrently": "^2.1.0"
   }
 }
