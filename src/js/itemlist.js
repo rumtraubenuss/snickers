@@ -2,12 +2,11 @@ import React, { Component } from 'react';
 import Entry from './entry';
 import { Panel, ButtonToolbar, Button, Table, Well } from 'react-bootstrap/lib';
 
-export default props => {
-  const messages = props.messages.map((message, index) =>
+export default ({ messages, handleDelClick, handleAdd }) => {
+  const rows = messages.map((message, index) =>
     <tr key={index}>
       <td>
         <Entry
-          handleDelClick={props.handleDelClick}
           message={message}
         />
       </td>
@@ -15,7 +14,7 @@ export default props => {
         <Button
           bsStyle="danger"
           bsSize="xsmall"
-          onClick={() => props.handleDelClick(message.id)}
+          onClick={() => handleDelClick(message.id)}
           type="button"
         >X</Button>
       </td>
@@ -29,13 +28,13 @@ export default props => {
           <Button
             bsSize="xsmall"
             bsStyle="primary"
-            onClick={props.handleAdd}
+            onClick={handleAdd}
           >Add</Button>
         </ButtonToolbar>
       </Well>
       <Table hover striped bordered>
         <tbody>
-          {messages}
+          {rows}
         </tbody>
       </Table>
     </Panel>
