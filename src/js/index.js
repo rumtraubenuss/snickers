@@ -9,4 +9,4 @@ horizon.connect();
 ReactDOM.render(<App horizon={horizon}/>, document.getElementById('app'));
 
 const stat = horizon.status();
-stat.subscribe(status => console.log('STATUS', status, status.error));
+stat.subscribe(status => console.log('STATUS', status));
