@@ -2,26 +2,20 @@ import React, { Component } from 'react';
 import Entry from './entry';
 import ItemList from './itemlist';
 import { Grid, Row, Col, PageHeader } from 'react-bootstrap/lib';
+import { subscribe } from 'horizon-react';
 
-export default class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {messages: []};
-    this.messages = props.horizon('messages');
-    this.messages.watch()
-      .subscribe(items => this.setState({ messages: [...items]}));
+class App extends Component {
+  handleDelClick = id => {
+    this.props.horizon('messages').remove(id);
   }
 
-  handleDelClick = (id) => {
-    this.messages.remove(id);
-  }
-
-  handleAdd = (ev) => {
+  handleAdd = ev => {
     ev.preventDefault();
-    this.messages.store({ time: new Date(), copy: 'n/a' });
+    this.props.horizon('messages').store({ time: new Date(), copy: 'n/a' });
   }
 
   render() {
+    const { messages } = this.props;
     return (
       <Grid>
         <Row className="show-grid">
@@ -31,7 +25,7 @@ export default class App extends Component {
             <ItemList
               handleAdd={this.handleAdd}
               handleDelClick={this.handleDelClick}
-              messages={this.state.messages}
+              messages={messages}
             />
           </Col>
         </Row>
@@ -39,3 +33,9 @@ export default class App extends Component {
     )
   }
 }
+
+const mapDataToProps = {
+  messages: hz => hz('messages'),
+};
+
+export default subscribe({ mapDataToProps })(App);
